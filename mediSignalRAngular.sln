@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33110.190
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "mediSignalRAngular", "mediSignalRAngular\mediSignalRAngular.esproj", "{07CE6DB5-783D-4516-9600-1B635B97D9CD}"
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "frontendSignalRAngular", "mediSignalRAngular\frontendSignalRAngular.esproj", "{07CE6DB5-783D-4516-9600-1B635B97D9CD}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "apiSignalR", "apiSignalR\apiSignalR.csproj", "{EF77C970-EE9D-4A16-B3E6-6922F34188BC}"
 EndProject
