@@ -4,9 +4,9 @@ namespace apiSignalR
 {
     public class MediFeedHub : Hub<IMediFeedHub>
     {
-        public async Task SendOffersToUser(List<string> message)
+        public async Task SendMessagesToUser(List<string> message)
         {
-            await Clients.All.SendOffersToUser(message);
+            await Clients.All.SendMessagesToUser(message);
         }
     
         public MediFeedHub()

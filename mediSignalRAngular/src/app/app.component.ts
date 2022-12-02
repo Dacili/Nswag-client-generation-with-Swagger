@@ -12,9 +12,9 @@ export class AppComponent {
   offers: any[] = [];
 
   ngOnInit(): void {
-    this.hubConnectionBuilder = new HubConnectionBuilder().withUrl('https://localhost:7163/offers').configureLogging(LogLevel.Information).build();
+    this.hubConnectionBuilder = new HubConnectionBuilder().withUrl('https://localhost:7163/mediMessaging').configureLogging(LogLevel.Information).build();
     this.hubConnectionBuilder.start().then(() => console.log('Connection started.......!')).catch(err => console.log('Error while connect with server'));
-    this.hubConnectionBuilder.on('SendOffersToUser', (result: any) => {
+    this.hubConnectionBuilder.on('SendMessagesToUser', (result: any) => {
       this.offers.push(result);
     });
   }
@@ -35,7 +35,6 @@ export class AppComponent {
    httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'
-     // 'Content-Type': 'application/json'
       //,
       //Authorization: 'my-auth-token'
     })
@@ -46,11 +45,8 @@ export class AppComponent {
 
   sendMessage() {
    
-    this.http.post<any>('https://localhost:7163/api/product/productoffers', JSON.stringify(this.message), this.httpOptions).subscribe(result => {
-      console.log(result)
+    this.http.post<any>('https://localhost:7163/api/Message/recieveAndSendMessage', JSON.stringify(this.message), this.httpOptions).subscribe(result => {
       this.message = "";
-
-
     });
     /*  , error => console.error(error));*/
   }

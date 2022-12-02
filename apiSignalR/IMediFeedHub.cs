@@ -4,6 +4,6 @@ namespace apiSignalR
 {
     public interface IMediFeedHub { 
    
-        Task SendOffersToUser(List<string> message);
+        Task SendMessagesToUser(List<string> message);
     }
 }

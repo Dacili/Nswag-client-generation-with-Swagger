@@ -11,7 +11,6 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSignalR();
 builder.Services.AddLogging();
-//builder.Services.AddSingleton<IMediFeedHub, MediFeedHub>();
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 builder.Services.AddCors(options =>
 {
@@ -43,10 +42,9 @@ app.UseAuthorization();
 
 app.MapControllers();
 app.MapHub<MediFeedHub>("/MediFeed");
-app.MapHub<MediFeedHub>("/offers");
+app.MapHub<MediFeedHub>("/mediMessaging");
 
 app.MapGet("/api/groups", () => {
     return new string[] { "Science", "IT", "Psychology", "Cooking", "Astronomy" };
-    //{ "Science", "IT", "Psychology", "Cooking", "Astronomy" }; 
 }).WithName("GetAllGroups");
 app.Run();

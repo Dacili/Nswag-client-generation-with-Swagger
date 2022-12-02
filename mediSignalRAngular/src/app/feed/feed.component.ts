@@ -15,22 +15,22 @@ export class FeedComponent implements OnInit, OnDestroy {
   constructor(private signalrService: SignalRService) { }
 
   ngOnInit(): void {
-    // 1 - start a connection
-    this.signalrService.startConnection().then(() => {
-      console.log("signalR connected");
+    //// 1 - start a connection
+    //this.signalrService.startConnection().then(() => {
+    //  console.log("signalR connected");
 
-      // 2 - register for ALL relay
-      this.signalrService.listenToAllFeeds();
+    //  // 2 - register for ALL relay
+    //  this.signalrService.listenToAllFeeds();
 
-      // 3 - subscribe to messages received
-      this.allFeedSubscription = this.signalrService.AllFeedObservable
-        .subscribe((res: any) => {
-          this.feed.push(res);
-        });
-    });
+    //  // 3 - subscribe to messages received
+    //  this.allFeedSubscription = this.signalrService.AllFeedObservable
+    //    .subscribe((res: any) => {
+    //      this.feed.push(res);
+    //    });
+    //});
   }
 
   ngOnDestroy(): void {
-    (<Subscription>this.allFeedSubscription).unsubscribe();
+    //(<Subscription>this.allFeedSubscription).unsubscribe();
   }
 }
