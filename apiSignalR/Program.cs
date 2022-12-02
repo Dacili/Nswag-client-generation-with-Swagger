@@ -1,4 +1,5 @@
 using apiSignalR;
+using System.Reflection.Metadata.Ecma335;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSignalR();
 builder.Services.AddLogging();
+//builder.Services.AddSingleton<IMediFeedHub, MediFeedHub>();
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 builder.Services.AddCors(options =>
 {
@@ -41,6 +43,10 @@ app.UseAuthorization();
 
 app.MapControllers();
 app.MapHub<MediFeedHub>("/MediFeed");
+app.MapHub<MediFeedHub>("/offers");
 
-//app.MapGet("/api/groups", () => Data.Groups).WithName("GetAllGroups");
+app.MapGet("/api/groups", () => {
+    return new string[] { "Science", "IT", "Psychology", "Cooking", "Astronomy" };
+    //{ "Science", "IT", "Psychology", "Cooking", "Astronomy" }; 
+}).WithName("GetAllGroups");
 app.Run();

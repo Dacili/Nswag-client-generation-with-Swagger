@@ -22,4 +22,14 @@
         </tr>
     </tbody>
 </table>-->
-<app-feed></app-feed>
+<!--<app-feed></app-feed>-->
+<p>Write your message here:</p>
+<input type="text" [ngModel]="message" (ngModelChange)="setUpMessage($event)"/>
+<button (click)="sendMessage()" style="margin-left:10px">Send message</button>
+<h2>Messages:</h2>
+<div *ngIf="offers.length>0" class="alert alert-warning" role="alert">
+  <li *ngFor="let item of offers">
+     {{item}}
+  </li>
+</div>
+<!--<router-outlet></router-outlet>-->

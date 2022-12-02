@@ -7,6 +7,8 @@ import { SignalRService } from '../services/signal-r.service';
 import { AppComponent } from './app.component';
 import { FeedComponent } from './feed/feed.component';
 import { GroupFeedComponent } from './group-feed/group-feed.component';
+import { AppRoutingModule } from './app-routing.module';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,8 @@ import { GroupFeedComponent } from './group-feed/group-feed.component';
     
   ],
   imports: [
-    BrowserModule, HttpClientModule, RouterModule
+    BrowserModule, HttpClientModule, RouterModule, AppRoutingModule, FormsModule
+
   ],
   providers: [SignalRService],
   bootstrap: [AppComponent]

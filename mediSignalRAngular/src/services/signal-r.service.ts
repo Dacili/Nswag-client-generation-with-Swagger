@@ -39,12 +39,14 @@ export class SignalRService {
 
   public listenToAllFeeds() {
     (<HubConnection>this.hubConnection).on("GetFeed", (data: any) => {
+      console.log('all feeds')
+      console.log(data)
       this.$allFeed.next(data);
     });
   }
 
 
-  private $groupFeed: Subject<any> = new Subject<any>();
+  $groupFeed: Subject<any> = new Subject<any>();
 
   public get GroupFeedObservable(): Observable<any> {
     return this.$groupFeed.asObservable();
@@ -62,7 +64,7 @@ export class SignalRService {
       (<HubConnection>this.hubConnection)
         .invoke("RegisterForFeed", groupName)
         .then(() => {
-          console.log("added to feed");
+          console.log("added to feed " + groupName);
           return resolve(true);
         }, (err: any) => {
           console.log(err);

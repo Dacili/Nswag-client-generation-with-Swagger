@@ -7,7 +7,7 @@ namespace apiSignalR
     public class FeedHostedService : IHostedService
     {
         private readonly IHubContext<MediFeedHub> _feedHubContext;
-        //private readonly ILogger<FeedHostedService> _logger;
+        private readonly ILogger<FeedHostedService> _logger;
         private readonly System.Timers.Timer _timer;
         private string[] _groups = { "Science", "IT", "Psychology", "Cooking", "Astronomy" };
         private string[] _authors = {"Medina", "Neko Tamo", "Ševal", "Zulejha"};
@@ -15,12 +15,12 @@ namespace apiSignalR
 
         public FeedHostedService(
             IHubContext<MediFeedHub> feedHubContext
-            //,
-            //ILogger<FeedHostedService> logger
+            ,
+            ILogger<FeedHostedService> logger
             )
         {
             _feedHubContext = feedHubContext;
-            //_logger = logger;
+            _logger = logger;
             _timer = new System.Timers.Timer(5000);
             _timer.Elapsed += GenerateAndSendFeed;
             _randomGroup = new Random(0);

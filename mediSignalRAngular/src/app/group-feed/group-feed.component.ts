@@ -23,14 +23,19 @@ export class GroupFeedComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.route.paramMap.subscribe((map) => {
       let groupName: any = map.get('id');
+      groupName = "Science";
       if (groupName) {
         this.signalrService.startConnection().then(() => {
           this.signalrService.joinGroupFeed(groupName).then(() => {
             this.signalrService.listenToGroupFeed();
+            //this.$groupFeedSubject = this.$groupFeed.subscribe((d: any) => {
             this.$groupFeedSubject = this.$groupFeed.subscribe((d: any) => {
+              console.log('group added ')
               console.log(d);
               this.groupFeed.push(d);
+              
             });
+            
           }, (err) => {
             console.log(err);
           })
