@@ -41,7 +41,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
-app.MapHub<MediFeedHub>("/MediFeed");
+//app.MapHub<MediFeedHub>("/MediFeed");
 app.MapHub<MediFeedHub>("/mediMessaging");
 
 app.MapGet("/api/groups", () => {
