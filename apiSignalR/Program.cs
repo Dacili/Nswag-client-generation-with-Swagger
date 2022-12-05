@@ -34,6 +34,7 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    //https://localhost:7163/swagger/v1/swagger.json
 }
 
 app.UseHttpsRedirection();
