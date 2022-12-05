@@ -17,7 +17,7 @@ This will generate the nswag.json file. Leave only part for typescript generatio
 "className": "BackendMediClient",   
 "output": "src/app/services/workflow-clientapi-base.ts" (ouput path is very important!)
 5. Check the version of runtime in nswag.json   "runtime": "NetCore21"
-6. Go to cmd, and type (make surre that your backend solution is runned) **nswag run**  
+6. Go to cmd, and type *(make sure that your backend solution is runned)* **nswag run**  
 Notice it will usually throw some errors, if you have multiple versions of .net on your pc. To fix this run:  
 **nswag run /runtime:NetCore21**
 7. It should succeed. ![image](https://user-images.githubusercontent.com/37112852/205678381-a12e1115-6c6e-472a-98b6-0d6ab3474517.png)
