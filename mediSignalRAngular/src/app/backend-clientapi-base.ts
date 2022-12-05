@@ -8,40 +8,62 @@
 /* eslint-disable */
 // ReSharper disable InconsistentNaming
 
+import { mergeMap as _observableMergeMap, catchError as _observableCatch } from 'rxjs/operators';
+import { Observable, throwError as _observableThrow, of as _observableOf } from 'rxjs';
+import { Injectable, Inject, Optional, OpaqueToken } from '@angular/core';
+import { HttpClient, HttpHeaders, HttpResponse, HttpResponseBase } from '@angular/common/http';
+
+export const BACKEND_MEDI_API_BASE_URL = new OpaqueToken('BACKEND_MEDI_API_BASE_URL');
+
+@Injectable()
 export class BackendMediClient {
-    private http: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> };
+    private http: HttpClient;
     private baseUrl: string;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
 
-    constructor(baseUrl?: string, http?: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> }) {
-        this.http = http ? http : window as any;
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(BACKEND_MEDI_API_BASE_URL) baseUrl?: string) {
+        this.http = http;
         this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
     }
 
     /**
      * @return Success
      */
-    getAllGroups(): Promise<string[]> {
+    getAllGroups(): Observable<string[]> {
         let url_ = this.baseUrl + "/api/groups";
         url_ = url_.replace(/[?&]$/, "");
 
-        let options_: RequestInit = {
-            method: "GET",
-            headers: {
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
                 "Accept": "application/json"
-            }
+            })
         };
 
-        return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processGetAllGroups(_response);
-        });
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllGroups(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllGroups(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<string[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<string[]>;
+        }));
     }
 
-    protected processGetAllGroups(response: Response): Promise<string[]> {
+    protected processGetAllGroups(response: HttpResponseBase): Observable<string[]> {
         const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
         if (status === 200) {
-            return response.text().then((_responseText) => {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             if (Array.isArray(resultData200)) {
@@ -52,78 +74,106 @@ export class BackendMediClient {
             else {
                 result200 = <any>null;
             }
-            return result200;
-            });
+            return _observableOf(result200);
+            }));
         } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
+            }));
         }
-        return Promise.resolve<string[]>(null as any);
+        return _observableOf<string[]>(null as any);
     }
 
     /**
      * @param body (optional) 
      * @return Success
      */
-    recieveAndSendMessage(body: string | undefined): Promise<void> {
+    recieveAndSendMessage(body: string | undefined): Observable<void> {
         let url_ = this.baseUrl + "/api/Message/recieveAndSendMessage";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(body);
 
-        let options_: RequestInit = {
+        let options_ : any = {
             body: content_,
-            method: "POST",
-            headers: {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
                 "Content-Type": "application/json",
-            }
+            })
         };
 
-        return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processRecieveAndSendMessage(_response);
-        });
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processRecieveAndSendMessage(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processRecieveAndSendMessage(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
     }
 
-    protected processRecieveAndSendMessage(response: Response): Promise<void> {
+    protected processRecieveAndSendMessage(response: HttpResponseBase): Observable<void> {
         const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
         if (status === 200) {
-            return response.text().then((_responseText) => {
-            return;
-            });
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(null as any);
+            }));
         } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
+            }));
         }
-        return Promise.resolve<void>(null as any);
+        return _observableOf<void>(null as any);
     }
 
     /**
      * @return Success
      */
-    getWeatherForecast(): Promise<WeatherForecast[]> {
+    getWeatherForecast(): Observable<WeatherForecast[]> {
         let url_ = this.baseUrl + "/WeatherForecast";
         url_ = url_.replace(/[?&]$/, "");
 
-        let options_: RequestInit = {
-            method: "GET",
-            headers: {
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
                 "Accept": "text/plain"
-            }
+            })
         };
 
-        return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processGetWeatherForecast(_response);
-        });
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetWeatherForecast(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetWeatherForecast(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<WeatherForecast[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<WeatherForecast[]>;
+        }));
     }
 
-    protected processGetWeatherForecast(response: Response): Promise<WeatherForecast[]> {
+    protected processGetWeatherForecast(response: HttpResponseBase): Observable<WeatherForecast[]> {
         const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
         if (status === 200) {
-            return response.text().then((_responseText) => {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             if (Array.isArray(resultData200)) {
@@ -134,14 +184,14 @@ export class BackendMediClient {
             else {
                 result200 = <any>null;
             }
-            return result200;
-            });
+            return _observableOf(result200);
+            }));
         } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
+            }));
         }
-        return Promise.resolve<WeatherForecast[]>(null as any);
+        return _observableOf<WeatherForecast[]>(null as any);
     }
 }
 
@@ -217,9 +267,25 @@ export class ApiException extends Error {
     }
 }
 
-function throwException(message: string, status: number, response: string, headers: { [key: string]: any; }, result?: any): any {
+function throwException(message: string, status: number, response: string, headers: { [key: string]: any; }, result?: any): Observable<any> {
     if (result !== null && result !== undefined)
-        throw result;
+        return _observableThrow(result);
     else
-        throw new ApiException(message, status, response, headers, null);
+        return _observableThrow(new ApiException(message, status, response, headers, null));
+}
+
+function blobToText(blob: any): Observable<string> {
+    return new Observable<string>((observer: any) => {
+        if (!blob) {
+            observer.next("");
+            observer.complete();
+        } else {
+            let reader = new FileReader();
+            reader.onload = event => {
+                observer.next((event.target as any).result);
+                observer.complete();
+            };
+            reader.readAsText(blob);
+        }
+    });
 }
