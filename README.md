@@ -26,7 +26,13 @@ Notice it will usually throw some errors, if you have multiple versions of .net 
 7. It should succeed. ![image](https://user-images.githubusercontent.com/37112852/205678381-a12e1115-6c6e-472a-98b6-0d6ab3474517.png)
 8. Check the generated file. ![image](https://user-images.githubusercontent.com/37112852/205679054-efa7d371-1d58-4b29-89e1-ef6cbd74d358.png)
 9. You can extract this command in package.json under scripts like this:  
-"updateClient": "nswag run /runtime:NetCore21",   and then to call it in cmd like: npm run updateClient
+"updateClient": "nswag run /runtime:NetCore21",   and then to call it in cmd like: npm run updateClient  
+  
+10. If you have multiple backends, you will need multiple generated client apis.  
+Copy nswag.json, rename it to some_name.nswag (notice the extension), in our case:  nswagNewOne.nswag  
+Update the nswag.json according to the new backend.  
+And run it with cmd:  nswag run **nswagNewOne.nswag** /runtime:NetCore21  
+You can do the same, to extract this command in package json as:  "updateClient2": "nswag run nswagNewOne.nswag /runtime:NetCore21"
 
 
 
