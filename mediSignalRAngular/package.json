@@ -8,7 +8,8 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "prestart": "node aspnetcore-https",
-    "updateClient": "nswag run /runtime:NetCore21"
+    "updateClient": "nswag run /runtime:NetCore21",
+    "updateClient2": "nswag run nswagNewOne.nswag /runtime:NetCore21"
   },
   "private": true,
   "dependencies": {
