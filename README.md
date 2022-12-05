@@ -1,6 +1,6 @@
 # Nswag client generation with Swagger
 
-**Swagger** (https://swagger.io/) offers ability to create client on the frontend side (in our case Angular) to connect with the APIs, so you don't have to create separate service, and to create a separate function for every api function and so on.. In simple, it makes the lives of frontend devs easier. 
+**Swagger** (https://swagger.io/) offers ability to create client on the frontend side (in our case Angular) to connect with the APIs, so you don't have to create separate service, and to create a separate function for every api function and so on.. And what is also awesome, is that you don't have to create models in your angular app to match the ones from backend, they are created for you as well! In simple, it makes the lives of frontend devs easier. 
 
 Note: this code use the base code from this repo https://github.com/Dacili/SignalR, with additions for nswag  
 How to run this solution:
