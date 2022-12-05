@@ -28,7 +28,7 @@ Notice it will usually throw some errors, if you have multiple versions of .net 
 9. You can extract this command in package.json under scripts like this:  
 "updateClient": "nswag run /runtime:NetCore21",   and then to call it in cmd like: npm run updateClient  
   
-10. If you have multiple backends, you will need multiple generated client apis.  
+10. If you have **multiple backends**, you will need multiple generated client apis.  
 Copy nswag.json, rename it to some_name.nswag (notice the extension), in our case:  nswagNewOne.nswag  
 Update the nswag.json according to the new backend.  
 And run it with cmd:  nswag run **nswagNewOne.nswag** /runtime:NetCore21  
