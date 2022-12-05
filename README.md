@@ -10,12 +10,12 @@ Steps:
 1. You will need to setup the swagger on the backend side. Add in the Program.cs: app.UseSwagger();app.UseSwaggerUI();
 The generated **swagger.json** you will be able to find at path: https://localhost:7163/swagger/v1/swagger.json
 2. On the frontend side, firstly install the npm pkg: npm i nswag
-3. Open the frontend project in cmd, and run: nswag new 
+3. Open the frontend project in cmd, and run: **nswag new**   
 This will generate the nswag.json file. Leave only part for typescript generation, remove for the csharp.
 4. In the nswag.json file change the next things:  
 "url": "https://localhost:7163/swagger/v1/swagger.json", (normally this would be some deployed place, not localhost)  
 "className": "BackendMediClient",   
-"output": "src/app/services/workflow-clientapi-base.ts" (ouput path is very important!)
+"output": "src/app/backend-clientapi-base.ts" (ouput path is very important!)
 5. Check the version of runtime in nswag.json   "runtime": "NetCore21"
 6. Go to cmd, and type *(make sure that your backend solution is runned)* **nswag run**  
 Notice it will usually throw some errors, if you have multiple versions of .net on your pc. To fix this run:  
