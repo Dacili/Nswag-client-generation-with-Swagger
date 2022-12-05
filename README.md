@@ -2,6 +2,7 @@
 
 **Swagger** (https://swagger.io/) offers ability to create client on the frontend side (in our case Angular) to connect with the APIs, so you don't have to create separate service, and to create a separate function for every api function and so on.. In simple, it makes the lives of frontend devs easier. 
 
+Note: this code use the base code from this repo https://github.com/Dacili/SignalR, with additions for nswag  
 How to run this solution:
 - *apiSignalR* is the backend project (.Net Core 6) - run it via visual studio
 - *frontendSignalRAngular* is the frontend project (Angular 13) - run it via cmd, with ng serve
