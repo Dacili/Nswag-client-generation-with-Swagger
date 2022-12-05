@@ -23,7 +23,7 @@ This will generate the nswag.json file. Leave only part for typescript generatio
 ![image](https://user-images.githubusercontent.com/37112852/205689758-4f3814fa-4b8c-4356-a54a-f40b77e8d26e.png)
 
 Notice it will usually throw some errors, if you have multiple versions of .net on your pc. To fix this run:  
-**nswag run /runtime:NetCore21**
+**nswag run /runtime:NetCore21**  
 7. It should succeed. ![image](https://user-images.githubusercontent.com/37112852/205678381-a12e1115-6c6e-472a-98b6-0d6ab3474517.png)
 8. Check the generated file. ![image](https://user-images.githubusercontent.com/37112852/205679054-efa7d371-1d58-4b29-89e1-ef6cbd74d358.png)
 9. You can extract this command in package.json under scripts like this:  
