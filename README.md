@@ -35,6 +35,9 @@ Update the nswag.json according to the new backend.
 And run it with cmd:  nswag run **nswagNewOne.nswag** /runtime:NetCore21  
 You can do the same, to extract this command in package json as:  "updateClient2": "nswag run nswagNewOne.nswag /runtime:NetCore21"
 
+  
+## Now you have generated clients, and they are ready for use! Yaaay
+
 
 
 
