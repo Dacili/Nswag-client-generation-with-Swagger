@@ -41,6 +41,15 @@ Notice that generated client functions are returning **Promises** as a result. I
   
 ## Now you have generated clients, and they are ready for use! Yaaay
 
+## What if I don't see functions from the API only some models?
+Make sure you have these properties set like this:  
+<img width="341" height="61" alt="image" src="https://github.com/user-attachments/assets/8029445c-4836-43ff-b401-1381dee82fcd" />  
+And then try again, it should fix the issue.
+
+## What if I don't want all controllers to be exported in Angular app?
+in ```nswag.json``` you can filter it with: ```?controllerNameFilter=HREVerifyController,LookupController``` at the end of url,     
+
+```"url": "https://app.dev.com/Something/InternalApi/swagger/Web.json?controllerNameFilter=HREVerifyController,LookupController",```
 
 
 
